@@ -21,28 +21,30 @@
 
 		const dataArray = new FormData();
 		files.accepted.forEach((file) => dataArray.append("file", file));
+		dataArray.append("mode", "MINMAX");
+		dataArray.append("points", "4");
 
-		let res = await fetch("http://localhost:8787/audiowave", {
+		let res = await fetch("https://audiowave_rs.sassy.workers.dev/audiowave", {
 			method: "POST",
 			body: dataArray,
 		});
-		let array: [{min: number, max: number}] = await res.json();
+		let array: [{ MinMax: {min: number, max: number}}] = await res.json();
 		// https://www.chartjs.org/docs/latest/charts/line.html
 		dataLine = {
 			// first 100 points only, change to view more
-			labels: Array.from(Array(100).keys()),
+			labels: Array.from(Array(500).keys()),
 			datasets: [
 				{
 					label: "Max",
 					lineTension: 0.3,
 					borderColor: "rgb(205, 130, 158)",
-					data: array.map(({max}) => max)
+					data: array.map(({ MinMax: { max }}) => max)
 				},
 				{
 					label: "Min",
 					lineTension: 0.3,
 					borderColor: "rgb(35, 26, 136)",
-					data: array.map(({min}) => min),
+					data: array.map(({ MinMax: {min}}) => min),
 				},
 			],
 		};
