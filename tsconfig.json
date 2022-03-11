@@ -21,8 +21,11 @@
     "allowJs": true,
     "checkJs": true,
     "paths": {
-      "$app/*": [".svelte/dev/runtime/app/*", ".svelte/build/runtime/app/*"]
-    }
+      "$app/*": [".svelte/dev/runtime/app/*", ".svelte/build/runtime/app/*"],
+      "$lib":["src/lib"],
+      "$lib/*":["src/lib/*"],
+     }
   },
-  "include": ["src/**/*.ts", "src/**/*.svelte"]
+  "include": ["src/**/*.ts", "src/**/*.svelte"],
+  "extends": "./.svelte-kit/tsconfig.json"
 }
